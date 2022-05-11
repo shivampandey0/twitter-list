@@ -8,11 +8,14 @@ export const Authenticate = () => {
   const [login, setLogin] = useState(true);
   const [formFields, setFormFields] = useState();
   const [loading, setLoading] = useState(false);
-  
+
   const toggleForm = () => setLogin((prev) => !prev);
 
   const updateFormFields = (e) => {
-    setFormFields((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setFormFields((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value || e.target?.checked,
+    }));
   };
 
   const onSignUp = async (e) => {

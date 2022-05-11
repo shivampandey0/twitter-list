@@ -1,4 +1,5 @@
 import {
+  browserLocalPersistence,
   browserSessionPersistence,
   createUserWithEmailAndPassword,
   setPersistence,
@@ -25,9 +26,12 @@ export const registerUser = async ({
   }
 };
 
-export const signinUser = async ({ email, password }) => {
+export const signinUser = async ({ email, password, remember = false }) => {
   try {
-    await setPersistence(auth, browserSessionPersistence);
+    await setPersistence(
+      auth,
+      remember ? browserLocalPersistence : browserSessionPersistence
+    );
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
     throw Error(error);
