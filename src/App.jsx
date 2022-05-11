@@ -1,8 +1,7 @@
-import "./App.css";
 import React from "react";
 
 function App() {
-  return <div className="App">Twitter List</div>;
+  return <div className="text-3xl text-center">Twitter List</div>;
 }
 
 export default App;
