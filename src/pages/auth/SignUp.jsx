@@ -1,7 +1,5 @@
 import {
   Button,
-  Checkbox,
-  Flex,
   FormControl,
   FormLabel,
   Heading,
@@ -9,7 +7,6 @@ import {
   Text,
   Link,
   Stack,
-  Image,
   Box,
   HStack,
   InputGroup,
@@ -18,46 +15,13 @@ import {
 import { useState } from "react";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 
-const SignInForm = ({ toggleForm }) => {
-  return (
-    <Stack spacing={4} w={"full"} maxW={"md"}>
-      <Heading fontSize={"4xl"}>Sign in</Heading>
-      <form>
-        <FormControl id="email" isRequired>
-          <FormLabel>Email address</FormLabel>
-          <Input type="email" isRequired={true} />
-        </FormControl>
-        <FormControl id="password" isRequired>
-          <FormLabel>Password</FormLabel>
-          <Input type="password" isRequired={true} />
-        </FormControl>
-        <Stack spacing={6}>
-          <Stack
-            direction={{ base: "column", sm: "row" }}
-            align={"start"}
-            justify={"space-between"}
-          >
-            <Checkbox>Remember me</Checkbox>
-            <Link color={"blue.500"}>Forgot password?</Link>
-          </Stack>
-          <Button type="submit" colorScheme={"blue"} variant={"solid"}>
-            Sign in
-          </Button>
-        </Stack>
-      </form>
-      <Stack pt={6}>
-        <Text align={"center"}>
-          Not a user?{" "}
-          <Link onClick={toggleForm} color={"blue.400"}>
-            Sign Up
-          </Link>
-        </Text>
-      </Stack>
-    </Stack>
-  );
-};
-
-const SignUpForm = ({ toggleForm }) => {
+export const SignUpForm = ({
+  toggleForm,
+  formFields,
+  updateFormFields,
+  onSubmit,
+  loading,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -67,30 +31,50 @@ const SignUpForm = ({ toggleForm }) => {
         to enjoy all of our cool features ✌️
       </Text>
       <Stack spacing={4}>
-        <form>
+        <form onSubmit={onSubmit}>
           <HStack>
             <Box>
               <FormControl id="firstName" isRequired>
                 <FormLabel>First Name</FormLabel>
-                <Input type="text" isRequired={true} />
+                <Input
+                  name="firstname"
+                  type="text"
+                  value={formFields?.firstname ?? ""}
+                  onChange={updateFormFields}
+                  isRequired={true}
+                />
               </FormControl>
             </Box>
             <Box>
               <FormControl id="lastName">
                 <FormLabel>Last Name</FormLabel>
-                <Input type="text" />
+                <Input
+                  type="text"
+                  name="lastname"
+                  value={formFields?.lastname ?? ""}
+                  onChange={updateFormFields}
+                />
               </FormControl>
             </Box>
           </HStack>
           <FormControl id="email" isRequired>
             <FormLabel>Email address</FormLabel>
-            <Input type="email" isRequired={true} />
+            <Input
+              type="email"
+              name="email"
+              value={formFields?.email ?? ""}
+              onChange={updateFormFields}
+              isRequired={true}
+            />
           </FormControl>
           <FormControl id="password" isRequired>
             <FormLabel>Password</FormLabel>
             <InputGroup>
               <Input
                 type={showPassword ? "text" : "password"}
+                name="password"
+                value={formFields?.password ?? ""}
+                onChange={updateFormFields}
                 isRequired={true}
               />
               <InputRightElement h={"full"}>
@@ -108,9 +92,10 @@ const SignUpForm = ({ toggleForm }) => {
           </FormControl>
           <Stack spacing={10} pt={2}>
             <Button
+              isLoading={loading}
               loadingText="Submitting"
               size="lg"
-              type='submit'
+              type="submit"
               bg={"blue.400"}
               color={"white"}
               _hover={{
@@ -130,32 +115,6 @@ const SignUpForm = ({ toggleForm }) => {
           </Text>
         </Stack>
       </Stack>
-    </Stack>
-  );
-};
-
-export const Authenticate = () => {
-  const [login, setLogin] = useState(true);
-  const toggleForm = () => setLogin((prev) => !prev);
-
-  return (
-    <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
-      <Flex p={8} flex={1} align={"center"} justify={"center"}>
-        {login ? (
-          <SignInForm toggleForm={toggleForm} />
-        ) : (
-          <SignUpForm toggleForm={toggleForm} />
-        )}
-      </Flex>
-      <Flex flex={1}>
-        <Image
-          alt={"Login Image"}
-          objectFit={"cover"}
-          src={
-            "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80"
-          }
-        />
-      </Flex>
     </Stack>
   );
 };
