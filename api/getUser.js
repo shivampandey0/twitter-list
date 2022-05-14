@@ -18,7 +18,7 @@ const handler = async (req, res) => {
     }
     const data = await response.json();
 
-    res.status(200).json(data);
+    res.status(200).json(data.data[0]);
   } catch (error) {
     res.status(500).json(error);
   }
