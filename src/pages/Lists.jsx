@@ -106,7 +106,7 @@ export const Lists = () => {
   }
 
   return (
-    <Container maxW='full' h='calc(100vh - 120px)'>
+    <Container maxW='full' minH='calc(100vh - 120px)'>
       <ListForm
         isOpen={isOpen}
         onOpen={onOpen}
