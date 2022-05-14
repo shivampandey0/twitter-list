@@ -20,7 +20,7 @@ import {
 } from '@chakra-ui/react';
 import { collection, onSnapshot } from 'firebase/firestore';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ListItem } from '../components';
 import { addDataToFirestore } from '../utils/db-services';
@@ -98,12 +98,19 @@ export const Lists = () => {
     setFormFields((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  if (uid) {
-    const q = collection(db, 'twitter_lists', uid, 'lists');
-    onSnapshot(q, (qs) => {
-      setLists(qs?.docs?.map((doc) => ({ id: doc?.id, data: doc?.data() })));
-    });
-  }
+  useEffect(() => {
+    let unsub = null;
+    if (uid) {
+      const q = collection(db, 'twitter_lists', uid, 'lists');
+      unsub = onSnapshot(q, (qs) => {
+        setLists(qs?.docs?.map((doc) => ({ id: doc?.id, data: doc?.data() })));
+      });
+    }
+
+    return () => {
+      unsub && unsub();
+    };
+  }, [uid]);
 
   return (
     <Container maxW='full' minH='calc(100vh - 120px)'>
