@@ -55,12 +55,13 @@ export const ListItem = ({
             p={1}
             pt={2}
           >
-            <Heading fontSize={'2xl'} fontFamily={'body'}>
+            <Heading fontSize={'2xl'} fontFamily={'body'} noOfLines={1}>
               {title}
             </Heading>
 
             <Text
               textAlign={'center'}
+              noOfLines={2}
               color={useColorModeValue('gray.700', 'gray.400')}
               px={3}
             >
