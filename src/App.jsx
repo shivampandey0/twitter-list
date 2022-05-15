@@ -4,7 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { Footer, Navbar } from './components';
 import { useAuth } from './context/auth-context/Context';
 import { Authenticate, Error, Home } from './pages';
-import { Lists } from './pages/Lists';
+import { Lists } from './pages/Lists/Lists';
 import { SingleList } from './pages/SingleList/SingleList';
 import { RedirectAuth } from './router/RedirectAuth';
 import { RequireAuth } from './router/RequireAuth';
