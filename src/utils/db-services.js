@@ -1,11 +1,35 @@
-import { addDoc, collection, deleteDoc, doc } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from 'firebase/firestore';
 import { db } from './firebase-config';
 
 // Firestore methods
-export const addDataToFirestore = async (uid, data) => {
+export const addList = async (uid, data) => {
   try {
     const docRef = collection(db, 'twitter_lists', uid, 'lists');
     await addDoc(docRef, data);
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+
+export const updateList = async (uid, docID, data) => {
+  try {
+    const docRef = doc(db, 'twitter_lists', uid, 'lists', docID);
+    await updateDoc(docRef, data);
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+
+export const deleteList = async (uid, docID) => {
+  try {
+    const docRef = doc(db, 'twitter_lists', uid, 'lists', docID);
+    await deleteDoc(docRef);
   } catch (e) {
     throw new Error(e);
   }
