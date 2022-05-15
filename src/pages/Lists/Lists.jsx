@@ -59,7 +59,11 @@ export const Lists = () => {
       <ModalForm
         docId={docId}
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={() => {
+          onClose();
+          setDocId();
+          setFormFields();
+        }}
         onSubmit={onSubmit}
         formFields={formFields}
         updateFormFields={updateFormFields}
