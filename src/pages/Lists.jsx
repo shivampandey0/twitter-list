@@ -140,7 +140,7 @@ export const Lists = () => {
                 key={id}
                 title={title}
                 description={description}
-                onReadClick={() => navigate(`/lists/${id}`)}
+                onReadClick={() => navigate(`/list/${id}`)}
               />
             );
           })}
