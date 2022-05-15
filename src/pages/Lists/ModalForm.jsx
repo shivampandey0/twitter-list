@@ -25,7 +25,7 @@ export const ModalForm = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Create List</ModalHeader>
+        <ModalHeader> {docId ? 'Update List' : 'Create List'}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Stack padding='4px' margin='8px'>
