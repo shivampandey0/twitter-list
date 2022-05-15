@@ -49,11 +49,15 @@ export const SingleList = () => {
       try {
         setLoading(true);
         const res = await fetch(`/api/getUser?username=${searchTerm}`);
-        const data = await res.json();
-        addUserInList(uid, id, data);
-        setSearchTerm('');
+        if (res.status === 200) {
+          const data = await res.json();
+          addUserInList(uid, id, data);
+          setSearchTerm('');
+        } else {
+          alert(`Couldn't find user, Please check username.`);
+        }
       } catch (error) {
-        throw new Error(error);
+        alert(`Couldn't find user, Please check username.`);
       } finally {
         setLoading(false);
       }
@@ -102,7 +106,7 @@ export const SingleList = () => {
       </Box>
       <Box
         w={{ base: selectedUser ? '100%' : '0', md: '70%' }}
-        overflowY='auto'
+        overflowY={selectedUser && 'auto'}
         height='100vh'
         paddingBottom={16}
       >
