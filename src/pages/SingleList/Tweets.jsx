@@ -1,21 +1,32 @@
-import { Badge, Box, Container, Skeleton, Stack, Text } from '@chakra-ui/react';
+import {
+  Badge,
+  Box,
+  Center,
+  Container,
+  Image,
+  Skeleton,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
 import React from 'react';
 import { useState, useEffect } from 'react';
 
 export const Tweets = ({ id, username }) => {
-  const [tweets, setTweets] = useState([]);
+  const [tweets, setTweets] = useState();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (id) {
       setLoading(true);
+      setTweets();
       (async () => {
         try {
           const res = await fetch(`/api/getUserTweets?userID=${id}`);
           const data = await res.json();
           formatTweets(data);
         } catch (error) {
-          throw new Error(error);
+          setError(true);
         }
       })();
     }
@@ -47,14 +58,22 @@ export const Tweets = ({ id, username }) => {
 
   return (
     <Container maxW='full' minH='calc(100vh - 120px)' paddingY={2}>
-      {loading ? (
+      {error && (
+        <Center flexDirection='column'>
+          <Image maxW='50%' src='/assets/error_unavailable.svg' />
+          <Text>Something went wrong.</Text>
+          <Text>Please try again later</Text>
+        </Center>
+      )}
+      {loading && !error ? (
         <Stack>
           <Skeleton minH='16vh' />
           <Skeleton minH='16vh' />
           <Skeleton minH='16vh' />
           <Skeleton minH='16vh' />
         </Stack>
-      ) : tweets ? (
+      ) : (
+        tweets &&
         tweets.map((tweet) => (
           <Box
             key={tweet.id}
@@ -79,8 +98,6 @@ export const Tweets = ({ id, username }) => {
             </Text>
           </Box>
         ))
-      ) : (
-        <Text>Tweets not found</Text>
       )}
     </Container>
   );
