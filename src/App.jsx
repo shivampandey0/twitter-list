@@ -27,10 +27,10 @@ function App() {
     return () => unsub;
   }, [isLoggedIn]);
   const location = useLocation();
-  const routeCheck = location.pathname === '/lists/:id';
+  const routeCheck = location.pathname.includes('/list/');
   return (
     <>
-      {isLoggedIn && routeCheck && <Navbar />}
+      {isLoggedIn && !routeCheck && <Navbar />}
       <Routes>
         <Route path='*' element={<Error />} />
         <Route path='/' element={<Home />} />
@@ -40,7 +40,7 @@ function App() {
 
         <Route element={<RequireAuth />}>
           <Route path='/lists' element={<Lists />} />
-          <Route path='/lists/:id' element={<SingleList />} />
+          <Route path='/list/:id' element={<SingleList />} />
         </Route>
       </Routes>
       <Footer />
