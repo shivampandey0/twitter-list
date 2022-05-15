@@ -22,7 +22,12 @@ export const TweetsNavbar = ({ user, onBack, onProfile, onDelete }) => {
 
   return (
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+      <Box
+        pos='sticky'
+        top='0'
+        bg={useColorModeValue('gray.100', 'gray.900')}
+        px={4}
+      >
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <Button
             as={Button}
@@ -32,7 +37,7 @@ export const TweetsNavbar = ({ user, onBack, onProfile, onDelete }) => {
             cursor={'pointer'}
             minW={0}
           >
-            <IoIosArrowBack size={32} color='grey' />
+            <IoIosArrowBack size={32} color='var(--chakra-colors-blue-500)' />
             <Avatar size={'sm'} src={user.profile_image_url} />
             <Heading ml={4} as='h4' size='md' color='black'>
               {user.name}
