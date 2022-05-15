@@ -73,6 +73,7 @@ export const SingleList = () => {
 
   return (
     <Container maxW='full' minH='100vh' display='flex' padding='0'>
+      {/* Users Section */}
       <Box
         minW={{ base: selectedUser ? '0' : '100%', md: '380px' }}
         w={{ base: selectedUser ? '0' : '100%', md: '30%' }}
@@ -104,6 +105,7 @@ export const SingleList = () => {
           })}
         {loading && <Skeleton h='8vh' />}
       </Box>
+      {/* Tweets Section */}
       <Box
         w={{ base: selectedUser ? '100%' : '0', md: '70%' }}
         overflowY={selectedUser && 'auto'}
@@ -111,7 +113,9 @@ export const SingleList = () => {
         paddingBottom={16}
       >
         {!selectedUser && (
-          <Center h='inherit'>Select a user to see their tweets</Center>
+          <Center display={{ base: 'none', md: 'flex' }} h='inherit'>
+            Select a user to see their tweets
+          </Center>
         )}
 
         {selectedUser && (
