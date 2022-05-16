@@ -16,7 +16,7 @@ export const SearchBox = ({ searchTerm, setSearchTerm, searchUser }) => {
         onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
         required
         value={searchTerm}
-        backgroundColor='blue.200'
+        backgroundColor='blue.100'
         onKeyDown={(e) => {
           if (e.key === 'Enter') searchUser();
         }}
