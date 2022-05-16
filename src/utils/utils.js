@@ -7,4 +7,6 @@ const openGithub = () =>
 const openTwitter = () =>
   window.open(`https://twitter.com/ErShivamPandey`, '_blank');
 
-export { openProfile, openGithub, openTwitter };
+const testUser = { email: 'pandeyshivam1312@gmail.com', password: '12345678' };
+
+export { openProfile, openGithub, openTwitter, testUser };
