@@ -44,6 +44,7 @@ export const SingleList = () => {
   const searchUser = async () => {
     const user = doesExist(searchTerm);
     if (user) {
+      setSelectedUser({ ...user.data, docId: user.id });
       alert('user already exists!');
     } else {
       try {
@@ -90,7 +91,7 @@ export const SingleList = () => {
           searchUser={searchUser}
         />
 
-        {twitterUsers.length > 0 &&
+        {twitterUsers.length ? (
           twitterUsers.map(({ id, data }) => {
             return (
               <SingleUser
@@ -102,7 +103,10 @@ export const SingleList = () => {
                 onClick={() => setSelectedUser({ docId: id, ...data })}
               />
             );
-          })}
+          })
+        ) : (
+          <Center my='50%' mx='10%' >Add Twitter Users by Twitter username above.</Center>
+        )}
         {loading && <Skeleton h='8vh' />}
       </Box>
       {/* Tweets Section */}

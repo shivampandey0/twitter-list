@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Center,
   Container,
@@ -14,11 +15,13 @@ import { ListItem } from '../../components';
 import { addList, deleteList, updateList } from '../../utils/db-services';
 import { auth, db } from '../../utils/firebase-config';
 import { ModalForm } from './ModalForm';
+import { SearchBox } from './SearchBox';
 
 export const Lists = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [formFields, setFormFields] = useState();
   const [lists, setLists] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
   const [docId, setDocId] = useState();
   const navigate = useNavigate();
 
@@ -45,7 +48,12 @@ export const Lists = () => {
     if (uid) {
       const q = collection(db, 'twitter_lists', uid, 'lists');
       unsub = onSnapshot(q, (qs) => {
-        setLists(qs?.docs?.map((doc) => ({ id: doc?.id, data: doc?.data() })));
+        const _lists = qs?.docs?.map((doc) => ({
+          id: doc?.id,
+          data: doc?.data(),
+        }));
+        setLists(_lists);
+        setFilteredList(_lists);
       });
     }
 
@@ -53,6 +61,16 @@ export const Lists = () => {
       unsub && unsub();
     };
   }, [uid]);
+
+  const searchInList = (searchTerm) => {
+    if (searchTerm) {
+      setFilteredList(() =>
+        lists.filter(({ data: { title } }) => title.toLowerCase().includes(searchTerm))
+      );
+    } else {
+      setFilteredList(lists);
+    }
+  };
 
   return (
     <Container maxW='full' minH='calc(100vh - 120px)'>
@@ -68,19 +86,22 @@ export const Lists = () => {
         formFields={formFields}
         updateFormFields={updateFormFields}
       />
-      <Flex w='100%' justifyContent='end'>
-        <Button onClick={onOpen} mt={4} colorScheme='blue'>
+      <Flex w='100%' alignItems='center' justifyContent='end'>
+        <Box flexGrow={1}>
+          <SearchBox onChange={searchInList} />
+        </Box>
+        <Button onClick={onOpen} colorScheme='blue'>
           Create List
         </Button>
       </Flex>
-      {lists.length ? (
+      {filteredList.length ? (
         <Grid
           templateColumns='repeat(auto-fit,minmax(380px,1fr))'
           gap={8}
           margin='8px'
           justifyContent='center'
         >
-          {lists.map(({ id, data: { title, description } }) => {
+          {filteredList.map(({ id, data: { title, description } }) => {
             return (
               <ListItem
                 key={id}

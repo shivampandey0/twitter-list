@@ -29,23 +29,20 @@ export const ListItem = ({
   return (
     <>
       <ModalAlert isOpen={isOpen} onClose={onClose} onConfirm={onDelete} />
-      <Center pos='relative'>
+      <Center>
         <Stack
+          pos='relative'
           borderWidth='1px'
           borderRadius='lg'
           w={{ md: '540px' }}
           height={{ md: '12rem' }}
-          direction={{ base: 'row', md: 'row' }}
+          direction='row'
           bg={useColorModeValue('white', 'gray.900')}
           boxShadow={'2xl'}
           padding={4}
         >
           <Flex flex={1} bg='white'>
-            <Image
-              objectFit='contain'
-              // boxSize='auto'
-              src={'/assets/list_placeholder.png'}
-            />
+            <Image objectFit='contain' src={'/assets/list_placeholder.png'} />
           </Flex>
           <Stack
             flex={1}
@@ -88,25 +85,25 @@ export const ListItem = ({
               </Button>
             </Stack>
           </Stack>
+          <Flex pos='absolute' top={4} right={4} alignItems={'center'}>
+            <Menu>
+              <MenuButton
+                as={Button}
+                rounded={'full'}
+                variant={'link'}
+                cursor={'pointer'}
+                minW={0}
+              >
+                {' '}
+                <FiMoreVertical size={20} />
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={onEdit}>Edit</MenuItem>
+                <MenuItem onClick={onOpen}>Delete</MenuItem>
+              </MenuList>
+            </Menu>
+          </Flex>
         </Stack>
-        <Flex pos='absolute' top={4} right={4} alignItems={'center'}>
-          <Menu>
-            <MenuButton
-              as={Button}
-              rounded={'full'}
-              variant={'link'}
-              cursor={'pointer'}
-              minW={0}
-            >
-              {' '}
-              <FiMoreVertical size={20} />
-            </MenuButton>
-            <MenuList>
-              <MenuItem onClick={onEdit}>Edit</MenuItem>
-              <MenuItem onClick={onOpen}>Delete</MenuItem>
-            </MenuList>
-          </Menu>
-        </Flex>
       </Center>
     </>
   );
