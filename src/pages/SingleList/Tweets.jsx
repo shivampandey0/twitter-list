@@ -25,6 +25,7 @@ export const Tweets = ({ id, username }) => {
           const res = await fetch(`/api/getUserTweets?userID=${id}`);
           const data = await res.json();
           formatTweets(data);
+          setError(false);
         } catch (error) {
           setError(true);
         }
